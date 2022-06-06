@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 import '../src/PointLatLng.dart';
@@ -9,6 +10,10 @@ import 'utils/polyline_result.dart';
 
 class NetworkUtil {
   static const String STATUS_OK = "ok";
+
+  NetworkUtil(this.webProxy);
+
+  final String? webProxy;
 
   ///Get the encoded string from google directions api
   ///
@@ -44,6 +49,10 @@ class NetworkUtil {
     }
     Uri uri =
         Uri.https("maps.googleapis.com", "maps/api/directions/json", params);
+
+    if (kIsWeb && webProxy != null) {
+      uri = Uri.parse('${webProxy!}${uri.toString()}');
+    }
 
     // print('GOOGLE MAPS URL: ' + url);
     var response = await http.get(uri);

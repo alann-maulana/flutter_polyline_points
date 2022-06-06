@@ -13,7 +13,9 @@ export 'src/PointLatLng.dart';
 export 'src/utils/polyline_result.dart';
 
 class PolylinePoints {
-  NetworkUtil util = NetworkUtil();
+  PolylinePoints({String? webProxy}) : util = NetworkUtil(webProxy);
+
+  final NetworkUtil util;
 
   /// Get the list of coordinates between two geographical positions
   /// which can be used to draw polyline between this two positions
